@@ -1,0 +1,116 @@
+#this is a simple hangman game of three random words 
+import random
+hangman= [
+    """
+   +---+
+   |   |
+       |
+       |
+       |
+       |
+=========
+    """,
+    """
+   +---+
+   |   |
+   O   |
+       |
+       |
+       |
+=========
+    """,
+    """
+   +---+
+   |   |
+   O   |
+   |   |
+       |
+       |
+=========
+    """,
+    """
+   +---+
+   |   |
+   O   |
+  /|   |
+       |
+       |
+=========
+    """,
+    """
+   +---+
+   |   |
+   O   |
+  /|\\  |
+       |
+       |
+=========
+    """,
+    """
+   +---+
+   |   |
+   O   |
+  /|\\  |
+  /    |
+       |
+=========
+    """,
+    """
+   +---+
+   |   |
+   O   |
+  /|\\  |
+  / \\  |
+       |
+=========
+    """
+]
+word = ["Apple","Banana","Ornage","Mango","Potato"]
+
+select=random.choice(word)#use random.choice(word)
+
+selected_word = select
+
+check=[None]*len(selected_word)
+
+print(selected_word)
+
+hid=""
+
+#hidden word in start 
+for i in range(len(selected_word)):
+    hid+="_ "
+
+game_chance=0
+ans=False
+print(hangman[game_chance]) 
+print(hid)
+while None in check:
+    guess=str(input("Enter Word: "))
+    #to check if the input guess is right or not 
+    for i in range(0,len(selected_word)):             
+        #if you put input and display blank word in same for the value of i remains constant throughout the process so only one blank is filled 
+        #if the input word is on the ramdom word it adds it to the list
+        if guess.lower()==selected_word[i:i+1].lower():
+            check[i]=guess
+            ans=True
+    
+    if ans == False:
+        game_chance+=1
+    
+    print(hangman[game_chance])
+    #To fill in the blanks of the hidden letters
+    for j in range(0,len(selected_word)):
+        if check[j]==None:
+            print(f"_ ",end="")
+        else:
+            print(f"{check[j]} ",end="")
+    if game_chance==6:
+        break
+    print("\n")
+    ans=False
+if None in check:
+    print("You Lost")
+else:
+    print("You won")
+    
