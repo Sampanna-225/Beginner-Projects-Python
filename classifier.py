@@ -1,34 +1,50 @@
 #dictionaries
 knowlege = {
     "h_emotion": [
-        'love','like','happy','nice','giggling','joy','smile','laugh','excited','delight','cheerful'
+        'love','like','happy','nice','giggling','joy','smile','laugh','excited','delight','cheerful',
+        'awesome','amazing','fantastic','wonderful','excellent','beautiful','great','perfect','grateful','blessed',
+        'optimistic','inspired','proud','confident','calm','peaceful','content','fascinated','thrilled','elated'
     ],
     "s_emotion": [
-        'sad','cry','crying','unhappy','depressed','lonely','upset','hurt','tears','miserable','hate'
+        'sad','cry','crying','unhappy','depressed','lonely','upset','hurt','tears','miserable','hate',
+        'angry','furious','frustrated','disappointed','disgusted','anxious','worried','stressed','scared','confused',
+        'ashamed','embarrassed','jealous','envious','bitter','bitter','heartbroken','devastated','desperate','hopeless'
     ],
     "sport": [
         'play','playing','sport','sports','football','soccer','ball','basketball','score',
-        'tennis','cricket','volleyball','swimming','running','gym','training','match','tournament'
+        'tennis','cricket','volleyball','swimming','running','gym','training','match','tournament',
+        'badminton','hockey','golf','boxing','wrestling','martial','skateboard','snowboard','skiing','cycling',
+        'athletics','track','field','coach','athlete','champion','league','competition','victory','win'
     ],
     "study": [
         'education','score','marks','english','nepali','math','science','computer','physics',
-        'physic','chemistry','biology','history','geography','exam','test','assignment','homework','lecture','class','teacher','student'
+        'physic','chemistry','biology','history','geography','exam','test','assignment','homework','lecture','class','teacher','student',
+        'school','college','university','library','book','read','write','learning','course','subject','degree','grade',
+        'scholarship','tuition','presentation','seminar','discussion','research','experiment','project','report','essay'
     ],
     "calculation": [
         '+','-','/','*','mathematics','math','algebra','geometry','trigonometry','equation',
-        'formula','addition','subtraction','multiplication','division','numbers','arithmetic'
+        'formula','addition','subtraction','multiplication','division','numbers','arithmetic',
+        'calculus','number','count','subtract','add','multiply','divide','modulus','power','square','root',
+        'fraction','decimal','percentage','ratio','proportion','prime','integer','variable','exponent'
     ],
     "technology": [
         'computer','laptop','mobile','phone','internet','software','hardware','programming',
-        'python','java','database','AI','robotics','coding','application','website'
+        'python','java','database','AI','robotics','coding','application','website',
+        'algorithm','data','server','network','cyber','digital','tech','code','debug','bug',
+        'javascript','html','css','framework','library','API','cloud','blockchain','machine','learning'
     ],
     "food": [
         'food','eat','meal','breakfast','lunch','dinner','snack','fruit','vegetable','rice','bread',
-        'meat','chicken','pizza','burger','coffee','tea','water','drink','juice'
+        'meat','chicken','pizza','burger','coffee','tea','water','drink','juice',
+        'apple','banana','orange','mango','cake','pasta','noodles','soup','curry','salad',
+        'sugar','salt','spice','flavor','taste','recipe','cook','bake','boil','grill','restaurant'
     ],
     "travel": [
         'trip','journey','travel','tour','holiday','vacation','flight','airport','bus','train',
-        'hotel','ticket','passport','visa','explore','adventure','map','destination'
+        'hotel','ticket','passport','visa','explore','adventure','map','destination',
+        'hiking','trekking','beach','mountain','river','city','country','tour','visit','sightseeing',
+        'luggage','backpack','camera','compass','navigation','tourism','tourist','resort','cruise','ferry'
     ]
 }
 type = ['happy', 'sad', 'sports', 'study', 'math', 'tech', 'food', 'travel']
