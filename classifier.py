@@ -43,18 +43,24 @@ knowlege = {
     "travel": [
         'trip','journey','travel','tour','holiday','vacation','flight','airport','bus','train',
         'hotel','ticket','passport','visa','explore','adventure','map','destination',
-        'hiking','trekking','beach','mountain','river','city','country','tour','visit','sightseeing',
+        'hiking','trekking','beach','mountain','river','city','tour','visit','sightseeing',
         'luggage','backpack','camera','compass','navigation','tourism','tourist','resort','cruise','ferry'
+    ],
+    "country": [
+        'Nepal','India','America','USA','England','UK','China','Japan','Germany','France',
+        'Australia','Canada','Brazil','Mexico','Russia','Italy','Spain','Korea','Thailand','Vietnam',
+        'Pakistan','Bangladesh','Australia','Indonesia','Malaysia','Philippines','Singapore','nation','state','government',
+        'flag','border','capital','city','region','province','territory','citizenship','nationality','continent'
     ]
 }
-type = ['happy', 'sad', 'sports', 'study', 'math', 'tech', 'food', 'travel']
+type = ['happy', 'sad', 'sports', 'study', 'math', 'tech', 'food', 'travel', 'country']
 
 
 
 
 #functions
 def context(n1):
-    happy=sad=sports=study=math=tech=food=travel=0
+    happy=sad=sports=study=math=tech=food=travel=country=0
     for i in n1:
         if i in knowlege['h_emotion']:
             happy+=1
@@ -72,7 +78,9 @@ def context(n1):
             food+=1
         elif i in knowlege['travel']:
             travel+=1
-    return happy, sad, sports, study, math, tech, food, travel 
+        elif i in knowlege['country']:
+            country+=1
+    return happy, sad, sports, study, math, tech, food, travel, country 
 
 def classify(k):
     if k[0]>k[1]:
@@ -83,11 +91,11 @@ def classify(k):
         emo = 'neutral'
 
     # Check if any category has a count > 0
-    if all(k[count] == 0 for count in range(2, 8)):
+    if all(k[count] == 0 for count in range(2, 9)):
         return {'emo': emo, 'about': 'unknown'}
     
     ab = 2
-    for i in range(2,8):
+    for i in range(2,9):
         if k[ab] < k[i]:
             ab = i
     return {'emo': emo , 'about': ab}
