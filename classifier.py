@@ -66,9 +66,13 @@ def classify(k):
     else:
         emo = 'neutral'
 
+    # Check if any category has a count > 0
+    if all(k[count] == 0 for count in range(2, 8)):
+        return {'emo': emo, 'about': 'unknown'}
+    
     ab = 2
     for i in range(2,8):
-        if k[ab] <= k[i]:
+        if k[ab] < k[i]:
             ab = i
     return {'emo': emo , 'about': ab}
 
@@ -101,4 +105,7 @@ for y in nl:
 print(context(nl))
 know = context(nl)
 about = classify(know)
-print(f'The user is {about['emo']} and is talking about {type[about['about']]}')
+if about['about'] == 'unknown':
+    print(f'The user is {about['emo']} and is talking about unknown')
+else:
+    print(f'The user is {about['emo']} and is talking about {type[about['about']]}')
