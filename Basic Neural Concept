@@ -36,25 +36,23 @@ class NeuralBrain:
         self.a2 = sigmoid(self.z2) #activation function
         return self.a1,self.a2 #final output of forward propagation
 
-    def backward_propagation(self,hidden_ouput,output):
+    def backward_propagation(self,hidden_output,output):
         # from output to hidden layer
         self.error = self.y - output 
         self.error_slope = sigmoid_derivative(output)*self.error
 
         #from hidden to output layer
-        self.hidden_error = self.error_slope*self.dot(self.W2.T) #==> matrix 3*2 . 2*3 == 3*3
-        self.hidden_error_slope = sigmoid_derivative(hidden_ouput)*self.hidden_error
+        self.hidden_error = self.error_slope.dot(self.W2.T) #==> matrix 3*2 . 2*3 == 3*3
+        self.hidden_error_slope = sigmoid_derivative(hidden_output)*self.hidden_error
 
         #correcting values form output to hidden layer
-        self.W2 += output.T.dot(self.error_slope)*self.lr # matrix multiplication dimensions.
+        self.W2 += hidden_output.T.dot(self.error_slope)*self.lr # matrix multiplication dimensions. => based on value they recieve so hidden output
         self.B2 += np.sum(self.error_slope,axis=0,keepdims=True)*self.lr #axis = 0 collapising rows
         
         #correcting calues from hidden to outpu layer
-        self.W1 += hidden_ouput.T.dot(self.hidden_error.slope)*self.lr
+        self.W1 += self.x.T.dot(self.hidden_error_slope)*self.lr # based on value they recieve so x
         self.B1 += np.sum(self.hidden_error_slope,axis=0,keepdims=True)*self.lr
 
-
-        
     def train(self,x,y):
         for epoch in range(10000):
             a,b = self.forward_propagation(self.x)
