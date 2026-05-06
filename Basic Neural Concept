@@ -8,6 +8,7 @@ class NeuralBrain:
         self.input_size = input_size
         self.hidden_size = hidden_size
         self.output_size = output_size
+        self.lr = 0.000001
 
         # takes random value for weight of range of input layer to hidden layer
         W1 = np.random.rand(self.input_size,self.hidden_size)
@@ -22,12 +23,31 @@ class NeuralBrain:
             # from input to hidden tinkering with weight and bias
             self.z1 = np.dot(x,self.W1) + self.B1 #Main concept == x.W1 + B1 __> output of hidden layer
             self.a1 = sigmoid(self.z1) #activation function
-            
+
             # from hidden to output tinkering with weight and bias
             self.z2 = np.dot(self.a1,self.W2) + self.B2 #Main concept == a1.W2 + B2
             self.a2 = sigmoid(self.z2) #activation function
-            return self.a2 #final output of forward propagation
-        
+            return self.a1,self.a2 #final output of forward propagation
+
+        def backward_propagation(self,x,y,hidden_ouput,output):
+            # from output to hidden layer
+            self.error = y - output
+            self.error_slope = sigmoid_derivative(output)*self.error
+
+            #from hidden to output layer
+            self.hidden_error = self.error_slope*self.dot(self.W1.T) #==> matrix 3*2 . 2*3 == 3*3
+            self.hidden_error_slope = sigmoid_derivative(hidden_ouput)*self.hidden_error
+
+            #correcting values form output to hidden layer
+            self.W2 += output.T.dot(self.error_slope)*self.lr # matrix multiplication dimensions.
+            self.B2 += np.sum(self.error_slope,axis=0,keepdims=True)*self.lr #axis = 0 collapising rows
+            
+            #correcting calues from hidden to outpu layer
+            self.W1 += hidden_ouput.T.dot(self.hidden_error.slope)*self.lr
+            self.B1 += np.sum(self.hidden_error_slope,axis=0,keepdims=True)*self.lr
+            
+
+            
 
         
 
