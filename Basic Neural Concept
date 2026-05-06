@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt #pyplot helps run plot function
 
 def sigmoid(x): #to get non linear output
     return 1/(1+np.exp(-x))
@@ -15,20 +16,23 @@ class NeuralBrain:
         self.output_size = output_size
         self.x = x
         self.y = y
-        self.lr = 0.000001
+        self.lr = 0.01 # best for small XOR
+        self.loss_history=[] 
 
         # takes random value for weight of range of input layer to hidden layer
         self.W1 = np.random.rand(self.input_size,self.hidden_size)
         # takes bias value for hidden layer
-        self.B1 = np.random.rand(self.hidden_size)
+        self.B1 = np.zeros((1,self.hidden_size))# 1 to avoid shape mismatch
+                                                #zeros as starting 0 is inital
         # takes random value for weight of range of hidden layer to output layer
         self.W2 = np.random.rand(self.hidden_size,self.output_size)
         # takes bias value for output layer
-        self.B2 = np.random.rand(self.output_size)
-
+        self.B2 = np.zeros((1,self.output_size)) # 1 to avoid shape mismatch
+                                                 #zeros as starting 0 is inital
     def forward_propagation(self,x):
         # from input to hidden tinkering with weight and bias
-        self.z1 = np.dot(self.x,self.W1) + self.B1 #Main concept == x.W1 + B1 __> output of hidden layer
+        # directly passed x helps reusability
+        self.z1 = np.dot(x,self.W1) + self.B1 #Main concept == x.W1 + B1 __> output of hidden layer
         self.a1 = sigmoid(self.z1) #activation function
 
         # from hidden to output tinkering with weight and bias
@@ -53,14 +57,34 @@ class NeuralBrain:
         self.W1 += self.x.T.dot(self.hidden_error_slope)*self.lr # based on value they recieve so x
         self.B1 += np.sum(self.hidden_error_slope,axis=0,keepdims=True)*self.lr
 
-    def train(self,x,y):
-        for epoch in range(10000):
+    def train(self):
+        for epoch in range(100000):
             a,b = self.forward_propagation(self.x)
             self.backward_propagation(a,b)
-            if epoch % 2000 :
+            if epoch % 2000 == 0 :
                 loss = np.mean((self.y-b)**2)
+                self.loss_history.append(loss) # to know learning rate
                 print(f"Loss {epoch} = {loss:.4f}")
     
 
+x = np.array([[0,0],
+              [0,1],
+              [1,0],
+              [1,1]])
 
+y = np.array([[0],
+              [1],
+              [1],
+              [0]])
 
+model = NeuralBrain(x,y,input_size=2,hidden_size=4,output_size=1)
+model.train()
+_ , final = model.forward_propagation(x) # _ to avoid previous variable
+print(final)
+
+plt.plot(model.loss_history)
+plt.title("Learning graph")
+plt.xlabel('Ephoch')
+plt.ylabel('Loss')
+plt.grid(True)
+plt.show()
