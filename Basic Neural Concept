@@ -1,0 +1,38 @@
+import numpy as np
+
+#Functions like input layer --> hidden layer --> output layer
+
+# Class creation for training
+class NeuralBrain:
+    def __init__(self,input_size,hidden_size,output_size):
+        self.input_size = input_size
+        self.hidden_size = hidden_size
+        self.output_size = output_size
+
+        # takes random value for weight of range of input layer to hidden layer
+        W1 = np.random.rand(self.input_size,self.hidden_size)
+        # takes bias value for hidden layer
+        B1 = np.random.rand(self.hidden_size)
+        # takes random value for weight of range of hidden layer to output layer
+        W2 = np.random.rand(self.hidden_size,self.output_size)
+        # takes bias value for output layer
+        B2 = np.random.rand(self.output_size)
+
+        def forward_propagation(self,x):
+            # from input to hidden tinkering with weight and bias
+            self.z1 = np.dot(x,self.W1) + self.B1 #Main concept == x.W1 + B1 __> output of hidden layer
+            self.a1 = sigmoid(self.z1) #activation function
+            
+            # from hidden to output tinkering with weight and bias
+            self.z2 = np.dot(self.a1,self.W2) + self.B2 #Main concept == a1.W2 + B2
+            self.a2 = sigmoid(self.z2) #activation function
+            return self.a2 #final output of forward propagation
+        
+
+        
+
+
+def sigmoid(x): #to get non linear output
+    return 1/(1+np.exp(-x))
+def sigmoid_derivative(x): #to get the derivative of sigmoid function
+    return x*(1-x) # expected value of sigmoid function 
