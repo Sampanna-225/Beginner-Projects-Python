@@ -69,25 +69,25 @@ class NeuralBrain:
                 self.loss_history.append(loss) # to know learning rate
                 print(f"Loss {epoch} = {loss:.4f}")
     
+if __name__ == "__main__":
+    x = np.array([[0,0],
+                [0,1],
+                [1,0],
+                [1,1]])
 
-x = np.array([[0,0],
-              [0,1],
-              [1,0],
-              [1,1]])
+    y = np.array([[0],
+                [1],
+                [1],
+                [0]])
 
-y = np.array([[0],
-              [1],
-              [1],
-              [0]])
+    model = NeuralBrain(x,y,input_size=2,hidden_size=4,output_size=1,process=100000)
+    model.train()
+    _ , final = model.forward_propagation(x) # _ to avoid previous variable
+    print(final)
 
-model = NeuralBrain(x,y,input_size=2,hidden_size=4,output_size=1,process=100000)
-model.train()
-_ , final = model.forward_propagation(x) # _ to avoid previous variable
-print(final)
-
-plt.plot(model.loss_history)
-plt.title("Learning graph")
-plt.xlabel('Ephoch')
-plt.ylabel('Loss')
-plt.grid(True)
-plt.show()
+    plt.plot(model.loss_history)
+    plt.title("Learning graph")
+    plt.xlabel('Ephoch')
+    plt.ylabel('Loss')
+    plt.grid(True)
+    plt.show()
