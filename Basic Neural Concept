@@ -10,7 +10,7 @@ def sigmoid_derivative(x): #to get the derivative of sigmoid function
 #Functions like input layer --> hidden layer --> output layer
 # Class creation for training
 class NeuralBrain:
-    def __init__(self,x,y,input_size,hidden_size,output_size,process):
+    def __init__(self,x,y,input_size,hidden_size,output_size):
         self.input_size = input_size
         self.hidden_size = hidden_size
         self.output_size = output_size
@@ -18,7 +18,6 @@ class NeuralBrain:
         self.y = y
         self.lr = 0.01 # best for small XOR
         self.loss_history=[] 
-        self.epoch = process
 
         # takes random value for weight of range of input layer to hidden layer
         self.__W1 = np.random.rand(self.input_size,self.hidden_size)
@@ -60,8 +59,8 @@ class NeuralBrain:
         self.__W1 += self.x.T.dot(self.hidden_error_slope)*self.lr # based on value they recieve so x
         self.__B1 += np.sum(self.hidden_error_slope,axis=0,keepdims=True)*self.lr
 
-    def train(self):
-        for epoch in range(self.epoch):
+    def train(self,process):
+        for epoch in range(process):
             a,b = self.forward_propagation(self.x)
             self.backward_propagation(a,b)
             if epoch % 2000 == 0 :
@@ -80,8 +79,8 @@ if __name__ == "__main__":
                 [1],
                 [0]])
 
-    model = NeuralBrain(x,y,input_size=2,hidden_size=4,output_size=1,process=100000)
-    model.train()
+    model = NeuralBrain(x,y,input_size=2,hidden_size=4,output_size=1)
+    model.train(100000)
     _ , final = model.forward_propagation(x) # _ to avoid previous variable
     print(final)
 
