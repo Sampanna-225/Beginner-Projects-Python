@@ -10,13 +10,13 @@ def sigmoid_derivative(x): #to get the derivative of sigmoid function
 #Functions like input layer --> hidden layer --> output layer
 # Class creation for training
 class NeuralBrain:
-    def __init__(self,x,y,input_size,hidden_size,output_size):
+    def __init__(self,x,y,input_size,hidden_size,output_size,lr):
         self.input_size = input_size
         self.hidden_size = hidden_size
         self.output_size = output_size
         self.x = x
         self.y = y
-        self.lr = 0.01 # best for small XOR
+        self.lr = lr
         self.loss_history=[] 
 
         # takes random value for weight of range of input layer to hidden layer
@@ -40,19 +40,19 @@ class NeuralBrain:
         # from hidden to output tinkering with weight and bias
         self.z2 = np.dot(self.a1,self.__W2) + self.__B2 #Main concept == a1.__W2 + __B2
         self.a2 = sigmoid(self.z2) #activation function
-        return self.a1,self.a2 #final output of forward propagation
+        return self.a2 #final output of forward propagation
 
-    def backward_propagation(self,hidden_output,output):
+    def backward_propagation(self,output):
         # from output to hidden layer
         self.error = self.y - output 
         self.error_slope = sigmoid_derivative(output)*self.error
 
         #from hidden to output layer
         self.hidden_error = self.error_slope.dot(self.__W2.T) #==> matrix 3*2 . 2*3 == 3*3
-        self.hidden_error_slope = sigmoid_derivative(hidden_output)*self.hidden_error
+        self.hidden_error_slope = sigmoid_derivative(self.a1)*self.hidden_error
 
         #correcting values form output to hidden layer
-        self.__W2 += hidden_output.T.dot(self.error_slope)*self.lr # matrix multiplication dimensions. => based on value they recieve so hidden output
+        self.__W2 += self.a1.T.dot(self.error_slope)*self.lr # matrix multiplication dimensions. => based on value they recieve so hidden output
         self.__B2 += np.sum(self.error_slope,axis=0,keepdims=True)*self.lr #axis = 0 collapising rows
         
         #correcting calues from hidden to outpu layer
@@ -61,8 +61,8 @@ class NeuralBrain:
 
     def train(self,process):
         for epoch in range(process):
-            a,b = self.forward_propagation(self.x)
-            self.backward_propagation(a,b)
+            b = self.forward_propagation(self.x)
+            self.backward_propagation(b)
             if epoch % 2000 == 0 :
                 loss = np.mean((self.y-b)**2)
                 self.loss_history.append(loss) # to know learning rate
@@ -90,8 +90,8 @@ if __name__ == "__main__":
                 [1],
                 [0]])
 
-    model = NeuralBrain(x,y,input_size=2,hidden_size=4,output_size=1)
-    model.train(100000)
-    _ , final = model.forward_propagation(x) # _ to avoid previous variable
+    model = NeuralBrain(x,y,input_size=2,hidden_size=4,output_size=1,lr=0.1)
+    model.train(process=100000)
+    final = model.forward_propagation(x) # _ to avoid previous variable
     print(final)
     model.graphplot()
