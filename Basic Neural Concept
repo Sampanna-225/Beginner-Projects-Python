@@ -92,6 +92,6 @@ if __name__ == "__main__":
 
     model = NeuralBrain(x,y,input_size=2,hidden_size=4,output_size=1,lr=0.1)
     model.train(process=100000)
-    final = model.forward_propagation(x) # _ to avoid previous variable
+    final = model.forward_propagation(x) 
     print(final)
     model.graphplot()
